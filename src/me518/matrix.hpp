@@ -1,7 +1,7 @@
 #pragma once
 
-#include <math.h>
-#include <memory.h>
+#include <cstring>
+#include "matrix_exceptions.hpp"
 
 namespace ME518{
 
@@ -22,16 +22,6 @@ namespace ME518{
         matrix_unit* 
         operator[](size_t i)
         {return data[i];}
-
-
-        Matrix<n,m> 
-        operator+(const Matrix<n,m> &other) const
-        {
-            Matrix<n,m> M;
-            for(int i = 0; i < n; i++) 
-            for(int j = 0; j < m; j++) 
-            M[i][j]=data[i][j]+other.data[i][j];
-        }
 
 
         template<size_t q> 
@@ -115,9 +105,45 @@ namespace ME518{
             for(int j = 0; j < m; j++) 
             for(int k = 0; k < q; k++) 
             M[i][k]=data[i][j]*other.data[j][k];
-
             return M;
         }
+
+        
+
+        Matrix<n,m> 
+        operator *(matrix_unit a) const
+        {
+            Matrix<n,m> M;
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            M[i][j]=data[i][j]*a;
+            return M;
+        }
+
+
+        Matrix<n,m> 
+        operator +(const Matrix<n,m> &other) const
+        {
+            Matrix<n,m> M;
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            M[i][j]=data[i][j]+other.data[i][j];
+            return M;
+        }
+
+        
+
+        Matrix<n,m> 
+        operator +(matrix_unit a) const
+        {
+            Matrix<n,m> M;
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            M[i][j]=data[i][j]+a;
+            return M;
+        }
+
+
 
         Matrix<m, n>
         transpose() const
@@ -126,6 +152,16 @@ namespace ME518{
             for(int i = 0; i < n; i++) 
             for(int j = 0; j < m; j++) 
             M[j][i]=data[i][j];
+        }
+
+        // template<size_t p, size_t q>
+        // Matrix<p, q>
+
+        matrix_unit
+        get(size_t i, size_t j) const
+        {
+            if(i>n) throw MatrixIndexOutOfBounds();
+            return data[i][j];
         }
 
 
@@ -139,6 +175,13 @@ namespace ME518{
         for(int i = 0; i < n; i++)
         I[n][n]=1;
         return I;
+    }
+
+    template<size_t n, size_t m>
+    Matrix<n,m>
+    Zeros(){
+        Matrix<n,m> M;
+        return M;
     }
 
 }

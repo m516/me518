@@ -12,4 +12,6 @@ int main()
     using namespace ME518;
     Matrix<3,3> I = Identity<3>();
     auto I2 = I*I;
+    I2 = I2 + 1;
+    matrix_unit t = I2.get(1, 1);
 }

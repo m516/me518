@@ -15,7 +15,9 @@ namespace ME518{
 
 
         Matrix<n,m>(){
-            memset(data, 0, sizeof(data));
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            data[i][j]=0;
         }
 
 
@@ -110,15 +112,6 @@ namespace ME518{
 
         
 
-        Matrix<n,m> 
-        operator *(matrix_unit a) const
-        {
-            Matrix<n,m> M;
-            for(int i = 0; i < n; i++) 
-            for(int j = 0; j < m; j++) 
-            M[i][j]=data[i][j]*a;
-            return M;
-        }
 
 
         Matrix<n,m> 
@@ -143,6 +136,36 @@ namespace ME518{
             return M;
         }
 
+        Matrix<n,m> 
+        operator -(matrix_unit a) const
+        {
+            Matrix<n,m> M;
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            M[i][j]=data[i][j]-a;
+            return M;
+        }
+
+        Matrix<n,m> 
+        operator *(matrix_unit a) const
+        {
+            Matrix<n,m> M;
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            M[i][j]=data[i][j]*a;
+            return M;
+        }
+
+        Matrix<n,m> 
+        operator /(matrix_unit a) const
+        {
+            Matrix<n,m> M;
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            M[i][j]=data[i][j]/a;
+            return M;
+        }
+
 
 
         Matrix<m, n>
@@ -152,16 +175,83 @@ namespace ME518{
             for(int i = 0; i < n; i++) 
             for(int j = 0; j < m; j++) 
             M[j][i]=data[i][j];
+            return M;
         }
 
-        // template<size_t p, size_t q>
-        // Matrix<p, q>
 
         matrix_unit
         get(size_t i, size_t j) const
         {
-            if(i>n) throw MatrixIndexOutOfBounds();
+            if(i>=n) throw MatrixIndexOutOfBounds();
+            if(j>=m) throw MatrixIndexOutOfBounds();
             return data[i][j];
+        }
+
+        
+        template<size_t p, size_t q>
+        Matrix<p, q>
+        get(size_t c, size_t d) const
+        {
+            if(c+p>n) throw MatrixIndexOutOfBounds();
+            if(d+q>m) throw MatrixIndexOutOfBounds();
+            Matrix<p, q> M;
+            for(int i = 0; i < p; i++) 
+            for(int j = 0; j < q; j++) 
+            M[i][j]=data[i+c][j+d];     
+            return M;       
+        }
+
+        void
+        set(size_t i, size_t j, matrix_unit newVal)
+        {
+            if(i>=n) throw MatrixIndexOutOfBounds();
+            if(j>=m) throw MatrixIndexOutOfBounds();
+            data[i][j] = newVal;
+        }
+
+        
+        template<size_t p, size_t q>
+        void
+        set(size_t c, size_t d, Matrix<p,q> newVal)
+        {
+            if(c+p>n) throw MatrixIndexOutOfBounds();
+            if(d+q>m) throw MatrixIndexOutOfBounds();
+            for(int i = 0; i < p; i++) 
+            for(int j = 0; j < q; j++) 
+            data[i+c][j+d] = newVal[i][j];    
+        }
+
+
+
+        Matrix<1, m>
+        row(size_t i) const
+        {
+            return get<1, m>(i, 0);
+        }
+
+        
+        Matrix<1, m>
+        column(size_t j) const
+        {
+            return get<n,1>(0, j);
+        }
+
+
+        void
+        copyTo(Matrix<n,m> &other) const
+        {
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            other[i][j]=data[i][j];
+        }
+
+        
+        void
+        copyTo(Matrix<n,m> *other) const
+        {
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            *other[i][j]=data[i][j];
         }
 
 
@@ -173,7 +263,7 @@ namespace ME518{
     Identity(){
         Matrix<n,n> I;
         for(int i = 0; i < n; i++)
-        I[n][n]=1;
+        I[i][i]=1;
         return I;
     }
 

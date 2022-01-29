@@ -7,7 +7,12 @@ namespace ME518{
     class TransformationMatrix : public Matrix<4,4> {
         public:
 
-        
+        TransformationMatrix(Matrix<4,4> M) : Matrix<4,4>()
+        {
+            M.copyTo(this);
+        }
+
+
         TransformationMatrix(RotationMatrix R, TranslationMatrix T) : Matrix<4, 4>()
         {
             setRotation(R);
@@ -98,9 +103,28 @@ namespace ME518{
             T.setRotation(getRotation().inverse());
 
             //translation
-            T.setTranslation(getRotation()*getTranslation()*-1.0);
+            T.setTranslation(T.getRotation()*getTranslation()*-1.0);
 
             return T;
+        }
+
+        TranslationMatrix
+        transform(const TranslationMatrix &p) const
+        {
+            //Using homogeneous coordinates
+            //Convert this point into a 4x1
+            Matrix<4,1> pe; //point extended
+            pe.set<3,1>(0,0,p);
+            pe.set(3,0,1); //Last coordinate should be 1
+
+            //Transform this point
+            pe = *this * pe;
+
+            //Divide by the last, extra element to get the true coordinates
+            pe = pe/pe.get(3,0);
+
+            //Grab and return the first three elements
+            return pe.get<3,1>(0,0);
         }
 
     };

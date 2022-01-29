@@ -24,7 +24,13 @@ int main()
 
     TransformationMatrix T1;
     T1.rotate(R);
-    T1 = T1 * T1;
+    TransformationMatrix T2 = T1 * T1;
+
+    TranslationMatrix p(1,1,1);
+    p = T1.transform(p);
+    T2 = T1.inverse();
+    p = T2.transform(p);
+
 
     return 0;
 }

@@ -6,8 +6,6 @@ namespace ME518{
     class TranslationMatrix : public Matrix<3,1> {
         public:
 
-        enum Direction{X,Y,Z};
-
         TranslationMatrix(Matrix<3,1> M) : Matrix<3,1>()
         {
             M.copyTo(this);
@@ -16,6 +14,13 @@ namespace ME518{
         TranslationMatrix() : Matrix<3,1>()
         {
 
+        }
+
+        TranslationMatrix(matrix_unit x, matrix_unit y = 0, matrix_unit z = 0) : Matrix<3,1>()
+        {
+            set(0,0,x);
+            set(1,0,y);
+            set(2,0,z);
         }
 
         void

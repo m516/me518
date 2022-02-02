@@ -18,6 +18,15 @@ namespace ME518{
             for(int i = 0; i < n; i++) 
             for(int j = 0; j < m; j++) 
             data[i][j]=0;
+
+            //memset(data[0], 0, sizeof(data));
+        }
+
+        void
+        operator=(const Matrix<n,m> &M){
+            for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++) 
+            data[i][j]=M.data[i][j];
         }
 
 
@@ -243,15 +252,6 @@ namespace ME518{
             for(int i = 0; i < n; i++) 
             for(int j = 0; j < m; j++) 
             other[i][j]=data[i][j];
-        }
-
-        
-        void
-        copyTo(Matrix<n,m> *other) const
-        {
-            for(int i = 0; i < n; i++) 
-            for(int j = 0; j < m; j++) 
-            *other[i][j]=data[i][j];
         }
 
 

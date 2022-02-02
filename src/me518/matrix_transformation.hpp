@@ -9,7 +9,7 @@ namespace ME518{
 
         TransformationMatrix(Matrix<4,4> M) : Matrix<4,4>()
         {
-            M.copyTo(this);
+            M.copyTo(*this);
         }
 
 
@@ -27,10 +27,6 @@ namespace ME518{
             set(3, 3, 1);
         }
 
-        void
-        operator=(Matrix<4,4> M){
-            M.copyTo(this);
-        }
 
         TranslationMatrix
         getTranslation() const{
@@ -124,7 +120,9 @@ namespace ME518{
             pe = pe/pe.get(3,0);
 
             //Grab and return the first three elements
-            return pe.get<3,1>(0,0);
+            Matrix<3,1> a = pe.get<3,1>(0,0);
+            TranslationMatrix pp = a;
+            return pp;
         }
 
     };

@@ -8,7 +8,7 @@ namespace ME518{
 
         TranslationMatrix(Matrix<3,1> M) : Matrix<3,1>()
         {
-            M.copyTo(this);
+            M.copyTo(*this);
         }
 
         TranslationMatrix() : Matrix<3,1>()
@@ -21,11 +21,6 @@ namespace ME518{
             set(0,0,x);
             set(1,0,y);
             set(2,0,z);
-        }
-
-        void
-        operator=(Matrix<3,1> M){
-            M.copyTo(this);
         }
 
         matrix_unit length(){

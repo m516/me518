@@ -14,14 +14,9 @@ namespace ME518{
             ZYX
         };
 
-        void
-        operator=(Matrix<3,3> M){
-            M.copyTo(this);
-        }
-
         RotationMatrix(Matrix<3,3> M) : Matrix<3,3>()
         {
-            M.copyTo(this);
+            M.copyTo(*this);
         }
 
         RotationMatrix() : Matrix<3,3>()

@@ -113,9 +113,9 @@ namespace ME518{
         {
             Matrix<n, q> M;
             for(int i = 0; i < n; i++) 
-            for(int j = 0; j < m; j++) 
-            for(int k = 0; k < q; k++) 
-            M[i][k]=data[i][j]*other.data[j][k];
+            for(int j = 0; j < q; j++) 
+            for(int k = 0; k < m; k++) 
+            M[i][j]+=data[i][k]*other.data[k][j];
             return M;
         }
 
@@ -273,5 +273,20 @@ namespace ME518{
         Matrix<n,m> M;
         return M;
     }
+
+    template <size_t n, size_t m>
+    std::ostream& operator<<(std::ostream& os,
+                        const Matrix<n,m>& M)
+    {
+        os << std::endl;
+        for(size_t i = 0; i < n; i++){
+            for(size_t j = 0; j < m; j++){
+                os << M.data[i][j] << "\t";
+            }
+            os << std::endl;
+        }
+        return os;
+    }
+
 
 }

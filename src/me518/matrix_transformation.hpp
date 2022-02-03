@@ -75,14 +75,14 @@ namespace ME518{
         }
 
         void
-        setTranslation(TranslationMatrix p)
+        setTranslation(const TranslationMatrix &p)
         {
             // Set the translation
             set<3,1>(0, 3, p);
         }
 
         void
-        setRotation(RotationMatrix R)
+        setRotation(const RotationMatrix &R)
         {
             // Set the rotation
             set<3,3>(0, 0, R);

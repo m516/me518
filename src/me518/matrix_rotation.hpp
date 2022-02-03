@@ -36,7 +36,7 @@ namespace ME518{
         RotationMatrix 
         rotate(Direction direction, matrix_unit a, matrix_unit b = 0, matrix_unit c = 0) const
         {
-            RotationMatrix R;
+            RotationMatrix R = Identity<3>();
             matrix_unit sinA = sin(a), cosA = cos(a);
 
 

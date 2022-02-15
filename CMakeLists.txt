@@ -26,7 +26,12 @@ endif()
 
 project ("ME518" C CXX)
     
+# External dependencies
+add_subdirectory("thirdparty")
 
 # Include sub-projects.
 include_directories("src")
 add_subdirectory ("src")
+
+# Tests
+add_subdirectory("test")
